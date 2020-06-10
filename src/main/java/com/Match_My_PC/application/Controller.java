@@ -50,6 +50,7 @@ public class Controller {
 
   @ApiOperation("donne la liste des PCS")
   @RequestMapping(value = "/pcs/{id}", method = RequestMethod.GET)
+  @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<PC> getPCSById(@PathVariable(value = "id") Long id) {
     try {
       log.info("********************INSIDE THE CONTROLLER********************");
@@ -60,6 +61,7 @@ public class Controller {
   }
 
   @RequestMapping(value = "/pcs", method = RequestMethod.POST)
+  @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<PC> createPCS(
       @RequestBody PC pc) {
     pc = pcService.addPC(pc);
@@ -77,6 +79,7 @@ public class Controller {
 
 
   @RequestMapping(value = "/pcs/{id}", method = RequestMethod.DELETE)
+  @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<PC> deletePCS(@PathVariable(value = "id") Long id) {
     pcService.deletePCS(id);
     return new ResponseEntity<>(HttpStatus.OK);
