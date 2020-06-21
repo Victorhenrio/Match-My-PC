@@ -11,36 +11,47 @@ import java.util.stream.StreamSupport;
 @Service
 public class PCDao {
 
-  private Match_My_PCRepository match_my_pcRepository;
+  private PCRepository pcRepository;
+  private ComposantRepository composantRepository;
 
-  public PCDao(Match_My_PCRepository match_my_pcRepository) {
-    this.match_my_pcRepository = match_my_pcRepository;
+  public PCDao(PCRepository match_my_pcRepository, ComposantRepository composantRepository) {
+    this.pcRepository = match_my_pcRepository;
+    this.composantRepository = composantRepository;
   }
 
   public List<PC> findPCS() {
-    return StreamSupport.stream(match_my_pcRepository.findAll().spliterator(), false)
-        .map(pcEntitie -> buildPC(pcEntitie))
+    return StreamSupport.stream(pcRepository.findAll().spliterator(), false)
+        .map(pcEntitie -> buildPC(pcEntitie, composantRepository.findByPCEntity(pcEntitie)))
         .collect(Collectors.toList());
   }
 
   public PC findPCS(Long id) throws NotFoundException {
-    return buildPC(match_my_pcRepository.findById(id).orElseThrow(NotFoundException::new));
+    PCEntity pcEntity = pcRepository.findById(id).orElseThrow(NotFoundException::new);
+    return buildPC(pcEntity, composantRepository.findByPCEntity(pcEntity));
   }
 
-  public PC createPCS(PC pc) {
-    return buildPC(match_my_pcRepository.save(buildEntity(pc)));
+
+  public PC createPCS(PC pc) throws NotFoundException {
+    PCEntity pcEntity = pcRepository.save(buildPCEntity(pc));
+    return buildPC(
+        pcRepository.findById(pcEntity.getId()).orElseThrow(NotFoundException::new),
+        composantRepository.findByPCEntity(pcEntity));
   }
 
   public void deletePCS(Long id) {
-    match_my_pcRepository.delete(match_my_pcRepository.findById(id).get());
+    pcRepository.delete(pcRepository.findById(id).get());
   }
 
   public void updatePC(PC pc) {
-    match_my_pcRepository.save(buildEntity(pc));
+    return; buildPC(pcRepository.save(buildPCEntity(pc)),
+      composantRepository.findByPCEntityId(pc.getId()));
+
+    pcRepository.save(buildEntity(pc));
   }
 
   public PC replacePC(PC pc) {
-    return buildPC(match_my_pcRepository.save(buildEntity(pc)));
+    PCEntity pcEntity = pcRepository.save(buildPCEntity(pc)),
+    return buildPC(pcEntity, composantRepository.findByPCEntity(pcEntity));
   }
 
   private PCEntity buildEntity(PC pc) {
@@ -53,12 +64,16 @@ public class PCDao {
         .build();
   }
 
-  private PC buildPC(PCEntity pcEntity) {
+  private PC buildPC(PCEntity pcEntity, List<ComposantEntity> composantEntities) {
     return PC.builder()
         .id(pcEntity.getId())
         .marque(pcEntity.getMarque())
         .date_sortie(pcEntity.getDate_sortie())
         .category(pcEntity.getCategory())
+        .composants(composantEntities
+            .stream()
+            .map(composantEntity -> composantEntity.getId())
+            .collect(Collectors.toList()))
         .build();
   }
 

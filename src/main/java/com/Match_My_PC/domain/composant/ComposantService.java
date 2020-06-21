@@ -3,12 +3,10 @@ package com.Match_My_PC.domain.composant;
 import com.Match_My_PC.infrastructure.ComposantDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Slf4j
 @Service
-
 public class ComposantService {
 
     private ComposantDao composantDao;

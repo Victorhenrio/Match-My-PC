@@ -2,10 +2,8 @@ package com.Match_My_PC.infrastructure;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @ToString
@@ -25,4 +23,7 @@ public class PCEntity {
   private String date_sortie;
   @Column(name = "CATEGORY", length = 50, nullable = false)
   private String category;
+
+  @OneToMany(mappedBy = "pcEntity", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
+  private List<ComposantEntity> composantEntityList;
 }

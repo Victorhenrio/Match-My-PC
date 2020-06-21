@@ -1,11 +1,11 @@
 package com.Match_My_PC.infrastructure;
 
+import com.Match_My_PC.domain.composant.Composant;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-import com.Match_My_PC.domain.composant.Composant;
-import java.util.List;
-
 
 @Service
 public class ComposantDao {
@@ -51,10 +51,10 @@ public class ComposantDao {
 
     private Composant buildComposant(ComposantEntity composantEntity) {
         return Composant.builder()
-                .id(ComposantEntity.getId())
-                .price(ComposantEntity.getPrice())
-                .category(ComposantEntity.getCategory())
-                .quantity(ComposantEntity.getQuantity())
+                .id(composantEntity.getId())
+                .price(composantEntity.getPrice())
+                .category(composantEntity.getCategory())
+                .quantity(composantEntity.getQuantity())
                 .build();
     }
 }

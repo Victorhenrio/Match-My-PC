@@ -1,12 +1,8 @@
 package com.Match_My_PC.domain.pc;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,5 +17,6 @@ public class PC {
   private String marque;
   private String date_sortie;
   private String category;
+  private List<Long> composants;
 
 }

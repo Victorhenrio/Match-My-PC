@@ -15,7 +15,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name ="COMPOSANT_ENTITY")
-
 public class ComposantEntity {
 
     @Id
