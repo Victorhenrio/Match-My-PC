@@ -18,7 +18,7 @@ public class ComposantService {
     public Composant addComposants(Long pcId, Composant composant) { return composantDao.addComposants(pcId, composant); }
 
     public List<Composant> findComposantsByPCId(Long pcId) {
-        return ComposantDao.findComposantsByPCId(pcId);
+        return composantDao.findComposantsByPCId(pcId);
     }
 
 }

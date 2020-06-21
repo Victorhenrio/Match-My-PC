@@ -42,19 +42,17 @@ public class PCDao {
     pcRepository.delete(pcRepository.findById(id).get());
   }
 
-  public void updatePC(PC pc) {
-    return; buildPC(pcRepository.save(buildPCEntity(pc)),
+  public PC updatePC(PC pc) {
+    return buildPC(pcRepository.save(buildPCEntity(pc)),
       composantRepository.findByPCEntityId(pc.getId()));
-
-    pcRepository.save(buildEntity(pc));
   }
 
   public PC replacePC(PC pc) {
-    PCEntity pcEntity = pcRepository.save(buildPCEntity(pc)),
+    PCEntity pcEntity = pcRepository.save(buildPCEntity(pc));
     return buildPC(pcEntity, composantRepository.findByPCEntity(pcEntity));
   }
 
-  private PCEntity buildEntity(PC pc) {
+  private PCEntity buildPCEntity(PC pc) {
     return PCEntity
         .builder()
         .id(pc.getId())
