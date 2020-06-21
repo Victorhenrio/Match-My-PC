@@ -22,7 +22,7 @@ public class ControllerTest {
 
 
   @Autowired
-  private Controller controller;
+  private PCController controller;
 
   @Test
   public void contexLoads() {
@@ -40,7 +40,7 @@ public class ControllerTest {
             .content()
             .json(
                 Stream
-                    .of("cat", "dog", "bird")
+                    .of("MAC", "ASUS", "DELL")
                     .collect(Collectors.toList()).toString()));
   }
 

@@ -24,11 +24,13 @@ public class GraphqlController {
 
     //Approche code first (le schéma est généré après le code)
     public GraphqlController(PCResolver pcResolver) {
+
         GraphQLSchema schema = new GraphQLSchemaGenerator()
 //        .withBasePackages("com.match_my_pc.graphql")
                 .withOperationsFromSingletons(pcResolver)
                 .generate();
         graphQL = GraphQL.newGraphQL(schema).build();
+
         log.info("Generated GraphQL schema using SPQR");
     }
 

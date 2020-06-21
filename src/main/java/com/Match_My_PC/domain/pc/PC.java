@@ -1,4 +1,4 @@
-package com.Match_My_PC.domain;
+package com.Match_My_PC.domain.pc;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

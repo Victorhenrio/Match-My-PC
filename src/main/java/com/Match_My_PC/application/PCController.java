@@ -1,14 +1,14 @@
 package com.Match_My_PC.application;
 
-import com.Match_My_PC.domain.PC;
-import com.Match_My_PC.domain.PCService;
+import com.Match_My_PC.domain.pc.PC;
+import com.Match_My_PC.domain.pc.PCService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +24,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 @Api(value = "afficher les PCS du catalogue")
-public class Controller {
+public class PCController {
 
   private PCService pcService;
   private ObjectMapper objectMapper;
 
-  public Controller(PCService pcService, ObjectMapper objectMapper) {
+  public PCController(PCService pcService, ObjectMapper objectMapper) {
     this.pcService = pcService;
     this.objectMapper = objectMapper;
   }
@@ -44,13 +44,12 @@ public class Controller {
 
 
   @RequestMapping(value = "/pcs", method = RequestMethod.GET)
+  @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<List<PC>> getPCS() {
     return new ResponseEntity<>(pcService.getPCS(), HttpStatus.OK);
   }
 
-  @ApiOperation("donne la liste des PCS")
   @RequestMapping(value = "/pcs/{id}", method = RequestMethod.GET)
-  @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<PC> getPCSById(@PathVariable(value = "id") Long id) {
     try {
       log.info("********************INSIDE THE CONTROLLER********************");
@@ -63,7 +62,8 @@ public class Controller {
   @RequestMapping(value = "/pcs", method = RequestMethod.POST)
   @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<PC> createPCS(
-      @RequestBody PC pc) {
+      @ApiParam(value = "PC object stored in database table", required = true)
+      @RequestBody PC pc) throws NotFoundException {
     pc = pcService.addPC(pc);
     return new ResponseEntity<>(pc, HttpStatus.CREATED);
   }
@@ -73,7 +73,7 @@ public class Controller {
       @PathVariable(value = "id") Long id,
       @RequestBody PC pc) {
     pc.setId(id);
-    pcService.replacePC(pc);
+    pc = pcService.replacePC(pc);
     return new ResponseEntity<>(pc, HttpStatus.OK);
   }
 
@@ -84,6 +84,7 @@ public class Controller {
     pcService.deletePCS(id);
     return new ResponseEntity<>(HttpStatus.OK);
   }
+
 
   @RequestMapping(value = "/pcs/{id}", method = RequestMethod.PATCH, consumes = "application/json-patch+json")
   public ResponseEntity<String> patchPCS(

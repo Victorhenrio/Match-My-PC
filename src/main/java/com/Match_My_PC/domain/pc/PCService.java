@@ -1,4 +1,4 @@
-package com.Match_My_PC.domain;
+package com.Match_My_PC.domain.pc;
 
 import com.Match_My_PC.infrastructure.PCDao;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package com.Match_My_PC.infrastructure;
 
-import com.Match_My_PC.domain.PC;
+import com.Match_My_PC.domain.pc.PC;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
