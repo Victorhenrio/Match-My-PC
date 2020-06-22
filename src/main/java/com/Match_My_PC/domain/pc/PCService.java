@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Slf4j
@@ -18,7 +17,9 @@ public class PCService {
     this.pcDao = pcDao;
   }
 
-  public List<PC> getPCS() { return pcDao.findPCS(); }
+  public List<PC> getPCS() {
+    return pcDao.findPCS();
+  }
 
   @Cacheable("pcs")
   public PC getPCS(Long id) throws NotFoundException {

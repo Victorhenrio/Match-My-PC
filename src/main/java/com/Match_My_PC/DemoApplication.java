@@ -41,8 +41,8 @@ public class DemoApplication implements CommandLineRunner {
   public void run(String... args) {
 
     log.info("Data initilisation...");
-    savePC(1L, "ASUS", "12/05/2019", "Ordinateur", Arrays.asList(Composant.builder().price(2.F).category("CPU").build()));
-    savePC(2L, "MAC", "23/12/2018", "Ordinateur", Arrays.asList(Composant.builder().price(3.F).category("RAM").build()));
+    savePC(1L, "ASUS", "12/05/2019", "Ordinateur", Arrays.asList(Composant.builder().category("CPU").quantity(1).price(2.F).build()));
+    savePC(2L, "MAC", "23/12/2018", "Ordinateur", Arrays.asList(Composant.builder().category("RAM").quantity(3).price(3.F).build()));
   }
 
   @Transactional

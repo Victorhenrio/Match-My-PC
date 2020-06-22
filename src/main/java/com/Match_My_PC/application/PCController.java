@@ -7,10 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -34,12 +31,13 @@ public class PCController {
     this.objectMapper = objectMapper;
   }
 
- @ApiResponses(value = {
+  @ApiOperation(value = "View a list of available PCs", response = List.class)
+  @ApiResponses(value = {
           @ApiResponse(code = 200, message = "Successfully retrieved list"),
           @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
           @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
           @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
-})
+  })
 
 
 

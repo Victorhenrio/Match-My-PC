@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ComposantController {
 
-    private ComposantController composantController;
+    private final ComposantService composantService;
 
     public ComposantController(ComposantService composantService) {
         this.composantService = composantService;

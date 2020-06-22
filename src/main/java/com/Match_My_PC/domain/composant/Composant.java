@@ -8,7 +8,6 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Composant {
 
     private Long id;
