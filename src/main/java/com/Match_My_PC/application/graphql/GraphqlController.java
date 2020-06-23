@@ -16,7 +16,6 @@ import java.util.Map;
 @Slf4j
 @RestController
 @GraphQLApi
-@RequestMapping("/graphql/v1")
 public class GraphqlController {
 
     //Declarer une instance de la classe GraphQL
@@ -24,6 +23,7 @@ public class GraphqlController {
 
     //Approche code first (le schéma est généré après le code)
     public GraphqlController(PCResolver pcResolver) {
+
         GraphQLSchema schema = new GraphQLSchemaGenerator()
 //        .withBasePackages("com.match_my_pc.graphql")
                 .withOperationsFromSingletons(pcResolver)
